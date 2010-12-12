@@ -60,3 +60,19 @@ a, a:visited {
 a:hover {
     text-decoration: underline;
 }
+
+div#overlay {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -145px 0 0 -145px;
+}

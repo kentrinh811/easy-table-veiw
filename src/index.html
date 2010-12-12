@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Incremental Search Example</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script src="raphael-min.js"></script>
     <script src="incremental_search.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
   </head>
@@ -28,6 +29,10 @@
         </tbody>
       </table>
       <span id="prev">prev</span>&nbsp;<span id="next">next</span>
+
+      <div id="overlay">
+        <div id="spinner"></div>
+      </div>
     </article>
 
     <footer>
