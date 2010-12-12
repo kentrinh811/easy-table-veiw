@@ -19,15 +19,14 @@ $(function() {
     };
 
     beginLoading();
-    $.getJSON(data_url, 
-              function(json) {
+    $.getJSON(data_url, function(json) {
                 init();
 
                 searched_data = data = json;
                 current_index = 0;
                 updateTotalItem(data.length);
                 updatePageNumber(current_index);
-                showTable(json);
+                drawData(json);
 
                 endLoading();
               });
@@ -40,18 +39,22 @@ $(function() {
       $('#' + dom_selectors.loading_overlay).remove();
     }
 
-    function showTable(json, begin_index) {
+    function drawData(json, begin_index) {
       var begin = begin_index || 0;
-      var html = makeTable(json, begin);
+      var html = makeHtml(json, makeFlatTable, begin);
       insertHtml(html);
     }
 
-    function makeTable(json, begin) {
+    function makeHtml(json, callback, begin) {
       var html = '';
       for (var i=0, c=json[i+begin]; c && i < row_num; c=json[++i + begin]) {
-        html += '<tr><td>' + c.join('</td><td>') + '</td></tr>'; // here
+        html += callback(c);
       }
       return html;
+    }
+
+    function makeFlatTable(elements) {
+      return '<tr><td>' + elements.join('</td><td>') + '</td></tr>';
     }
 
     function insertHtml(html) {
@@ -68,6 +71,18 @@ $(function() {
       $('#' + dom_selectors.paging_total_page).html(parseInt((data_total / row_num) + 0.9, 10));
     }
 
+    function isMatch(row, reg) {
+      var ret = false;
+      var text = [row[0], row[1], row[2], row[3]];
+      for (var k=0, query=text[k]; query; query=text[++k]) {
+        var tmp = query.search(reg);
+        if (tmp != -1) {
+          ret = true;
+        }
+      }
+      return ret;
+    }
+
     function init() {
       $('#' + dom_selectors.paging_next).click(onclick_next);
       $('#' + dom_selectors.paging_prev).click(onclick_prev);
@@ -80,7 +95,7 @@ $(function() {
       }
       current_index -= row_num;
       updatePageNumber(current_index);
-      showTable(searched_data, current_index);
+      drawData(searched_data, current_index);
     }
 
     function onclick_next(event) {
@@ -89,7 +104,7 @@ $(function() {
       }
       current_index += row_num;
       updatePageNumber(current_index);
-      showTable(searched_data, current_index);
+      drawData(searched_data, current_index);
     }
 
     function onkeyup() {
@@ -106,22 +121,16 @@ $(function() {
       if (query_regexp.length <= 0) {
         updateTotalItem(data.length);
         updatePageNumber(current_index);
-        showTable(data);
+        drawData(data);
         return false;
       }
       
       // search matched rows
       var searched = [];
       for (var i=0, row=data[i]; row; row=data[++i]) {
-        var text = [row[0], row[1], row[2]]; // here
         var found =false;
         for (var j=0, reg=query_regexp[j]; reg; reg=query_regexp[++j]) {
-          for (var k=0, query=text[k]; query; query=text[++k]) {
-            var tmp = query.search(reg);
-            if (tmp != -1) {
-              found = true;
-            }
-          }
+          found = isMatch(row, reg);
         }
         found && searched.push(row);
       }
@@ -130,7 +139,7 @@ $(function() {
       searched_data = searched;
       updateTotalItem(searched_data.length);
       updatePageNumber(current_index);
-      showTable(searched);
+      drawData(searched);
     }
 
     function onfocus_input_form() {
