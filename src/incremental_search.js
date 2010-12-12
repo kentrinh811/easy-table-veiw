@@ -8,16 +8,16 @@ $(function() {
     var input_form_default_word = 'input search query';
     var data_url = 'http://localhost/~kosei/incremental_search_simple/resources/test_set.json';
     var dom_selectors = {
-      'search_form': 'input-form',
-      'total_hit': 'total',
+      'search_form': '#input-form',
+      'total_hit': '#total',
       'paging_next': '.next',
       'paging_prev': '.prev',
-      'paging_current_page': 'page-current',
-      'paging_total_page': 'page-total',
-      'loading': 'spinner',
-      'loading_overlay': 'overlay',
-      'result_stats': 'result-stats'
+      'paging_current_page': '#page-current',
+      'paging_total_page': '#page-total',
+      'loading_overlay': '#overlay',
+      'result_stats': '.result-stats'
     };
+    var spinner_target = 'spinner';
 
     beginLoading();
     $.getJSON(data_url, function(json) {
@@ -32,16 +32,16 @@ $(function() {
               });
 
     function beginLoading() {
-      spinner(dom_selectors.loading, 70, 120, 12, 25, '#fff');
+      spinner(spinner_target, 70, 120, 12, 25, '#fff');
     }
 
     function endLoading() {
-      $('#' + dom_selectors.loading_overlay).remove();
+      $(dom_selectors.loading_overlay).remove();
     }
 
     function drawStats() {
       var stat = $('<span>Page <span id="page-current"></span> of <span id="page-total"></span> (Total <span id="total"></span> items)</span>');
-      $('.' + dom_selectors.result_stats).append(stat);
+      $(dom_selectors.result_stats).append(stat);
     }
 
     function drawData(json, begin_index) {
@@ -68,12 +68,12 @@ $(function() {
 
     function updateTotalItem(n) {
       data_total = n;
-      $('#' + dom_selectors.total_hit).html(data_total);
+      $(dom_selectors.total_hit).html(data_total);
     }
 
     function updatePageNumber(n) {
-      $('#' + dom_selectors.paging_current_page).html(parseInt(current_index / row_num, 10) + 1);
-      $('#' + dom_selectors.paging_total_page).html(parseInt((data_total / row_num) + 0.9, 10));
+      $(dom_selectors.paging_current_page).html(Math.floor(current_index / row_num) + 1);
+      $(dom_selectors.paging_total_page).html(Math.ceil((data_total / row_num)));
     }
 
     function isMatch(row, reg) {
@@ -91,7 +91,7 @@ $(function() {
     function init() {
       $(dom_selectors.paging_next).click(onclick_next);
       $(dom_selectors.paging_prev).click(onclick_prev);
-		  $('#' + dom_selectors.search_form).keyup(onkeyup).focus(onfocus_input_form).blur(onblur_input_form).val(input_form_default_word);
+		  $(dom_selectors.search_form).keyup(onkeyup).focus(onfocus_input_form).blur(onblur_input_form).val(input_form_default_word);
     }
 
     function onclick_prev(event) {
@@ -104,7 +104,7 @@ $(function() {
     }
 
     function onclick_next(event) {
-      if (current_index + row_num > data_total) {
+      if (current_index + row_num >= data_total) {
         return false;
       }
       current_index += row_num;
