@@ -10,7 +10,7 @@ header, article, footer {
 
 table {
 	  background: #fff;
-	  margin: 0px;
+	  margin: 0px 0px 10px 0px;
 	  border-collapse: collapse;
 	  text-align: left;
     width: 100%;
@@ -34,12 +34,21 @@ table tbody tr:hover td {
 	  color: #009;
 }
 
+article header#input {
+    color: #666;
+    margin-bottom: 30px;
+}
+
 #input-form {
     color: #cccccc;
-    margin-bottom: 50px;
     border: 1px solid #bbbbbb;
     padding: 7px;
-    font-size: 18px;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.result-stats {
+    font-size: 0.8em
 }
 
 footer {
@@ -75,4 +84,27 @@ svg {
     top: 50%;
     left: 50%;
     margin: -145px 0 0 -145px;
+}
+
+ul#icons {
+    margin: 0;
+    padding: 0;
+}
+
+ul#icons li {
+    margin: 2px;
+    position: relative;
+    padding: 4px 0;
+    cursor: pointer;
+    float: left;
+    list-style: none;
+}
+
+ul#icons span.ui-icon {
+    float: left;
+    margin: 0 4px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: none;
 }

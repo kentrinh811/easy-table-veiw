@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <script src="raphael-min.js"></script>
     <script src="incremental_search.js"></script>
+		<link type="text/css" href="jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
   </head>
 
@@ -15,12 +16,18 @@
     </header>
 
     <article>
-      <input type="text" id="input-form" name="input-form" value="input search query"></input>
+      <header id="input">
+        <input type="text" id="input-form" name="input-form" value="input search query"></input>
+        <div class="result-stats"></div>
+      </header>
 
-      <div>
-        <span id="total"></span> hits<br />
-        <span id="page-current"></span>&nbsp;of&nbsp;<span id="page-total"></span>
-      </div>
+      <nav class="table-nav">
+        <ul id="icons" class="ui-widget ui-helper-clearfix">
+		      <li class="ui-state-default ui-corner-all prev" title=".ui-icon-triangle-1-w"><span class="ui-icon ui-icon-triangle-1-w"></span></li>
+		      <li class="ui-state-default ui-corner-all next" title=".ui-icon-triangle-1-e"><span class="ui-icon ui-icon-triangle-1-e"></span></li>
+        </ul>
+      </nav>
+
       <table id="data-table">
         <thead>
           <tr><th>Seq.</th><th>Name</th><th>Description</th><th>URL</th></tr>
@@ -28,7 +35,13 @@
         <tbody>
         </tbody>
       </table>
-      <span id="prev">prev</span>&nbsp;<span id="next">next</span>
+
+      <nav class="table-nav">
+        <ul id="icons" class="ui-widget ui-helper-clearfix">
+		      <li class="ui-state-default ui-corner-all prev" title=".ui-icon-triangle-1-w"><span class="ui-icon ui-icon-triangle-1-w"></span></li>
+		      <li class="ui-state-default ui-corner-all next" title=".ui-icon-triangle-1-e"><span class="ui-icon ui-icon-triangle-1-e"></span></li>
+        </ul>
+      </nav>
 
       <div id="overlay">
         <div id="spinner"></div>

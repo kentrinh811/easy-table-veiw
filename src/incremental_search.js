@@ -10,24 +10,24 @@ $(function() {
     var dom_selectors = {
       'search_form': 'input-form',
       'total_hit': 'total',
-      'paging_next': 'next',
-      'paging_prev': 'prev',
+      'paging_next': '.next',
+      'paging_prev': '.prev',
       'paging_current_page': 'page-current',
       'paging_total_page': 'page-total',
       'loading': 'spinner',
-      'loading_overlay': 'overlay'
+      'loading_overlay': 'overlay',
+      'result_stats': 'result-stats'
     };
 
     beginLoading();
     $.getJSON(data_url, function(json) {
                 init();
-
                 searched_data = data = json;
                 current_index = 0;
+                drawStats();
                 updateTotalItem(data.length);
                 updatePageNumber(current_index);
                 drawData(json);
-
                 endLoading();
               });
 
@@ -37,6 +37,11 @@ $(function() {
 
     function endLoading() {
       $('#' + dom_selectors.loading_overlay).remove();
+    }
+
+    function drawStats() {
+      var stat = $('<span>Page <span id="page-current"></span> of <span id="page-total"></span> (Total <span id="total"></span> items)</span>');
+      $('.' + dom_selectors.result_stats).append(stat);
     }
 
     function drawData(json, begin_index) {
@@ -84,8 +89,8 @@ $(function() {
     }
 
     function init() {
-      $('#' + dom_selectors.paging_next).click(onclick_next);
-      $('#' + dom_selectors.paging_prev).click(onclick_prev);
+      $(dom_selectors.paging_next).click(onclick_next);
+      $(dom_selectors.paging_prev).click(onclick_prev);
 		  $('#' + dom_selectors.search_form).keyup(onkeyup).focus(onfocus_input_form).blur(onblur_input_form).val(input_form_default_word);
     }
 
