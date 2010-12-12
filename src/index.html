@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Incremental Search Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script src="incremental_search.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  </head>
+
+  <body>
+    <header>
+      <h1>Incremental Search Example</h1>
+    </header>
+
+    <article>
+      <input type="text" id="input-form" name="input-form" value="input search query"></input>
+
+      <div>
+        <span id="total"></span> hits<br />
+        <span id="page-current"></span>&nbsp;of&nbsp;<span id="page-total"></span>
+      </div>
+      <table id="data-table">
+        <thead>
+          <tr><th>Seq.</th><th>Name</th><th>Description</th><th>URL</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <span id="prev">prev</span>&nbsp;<span id="next">next</span>
+    </article>
+
+    <footer>
+      <p>by <a href="http://twitter.com/cou929">@cou929</a></p>
+    </footer>
+  </body>
+</html>
